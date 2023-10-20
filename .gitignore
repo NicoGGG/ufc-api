@@ -13,6 +13,10 @@ __pycache__/
 db.sqlite3
 db.sqlite3-journal
 
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
 # Environments (virtualenv)
 .env
 .venv/
