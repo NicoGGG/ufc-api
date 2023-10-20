@@ -9,21 +9,6 @@ from datetime import datetime
 from ufcscraper.scrapers import get_fighter_photo_url, scrap_fights_from_event
 
 
-# scraping function for fighter photos
-@shared_task
-def scrape_all_ufc_fighters_photo_and_update():
-    fighters = Fighter.objects.all()
-    for fighter in fighters:
-        url = f"https://liveapi.yext.com/v2/accounts/me/answers/vertical/query?experienceKey=answers-en&api_key=850a88aeb3c29599ce2db46832aa229f&v=20220511&version=PRODUCTION&locale=en&input={fighter.first_name}+{fighter.last_name}&verticalKey=athletes&limit=21&offset=0&retrieveFacets=true&facetFilters=%7B%7D&session_id=3ed6799e-6cad-46ea-9137-d9bd11417549&sessionTrackingEnabled=true&sortBys=%5B%5D&referrerPageUrl=https%3A%2F%2Fwww.ufc.com%2F&source=STANDARD&jsLibVersion=v1.14.3"
-        page = requests.get(url)
-        fighter_to_update = Fighter.objects.get(fighter_id=fighter.fighter_id)
-        fighter_photo_url = get_fighter_photo_url(page, fighter.to_dict())
-        fighter_to_update.photo_url = fighter_photo_url
-        fighter_to_update.save()
-
-    return "Updated all fighters photos"
-
-
 # saving function for fights
 @shared_task(serializer="json")
 def save_all_fights_from_event(fights, event_id: str):

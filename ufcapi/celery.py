@@ -19,8 +19,4 @@ app.conf.beat_schedule = {
         "task": "ufcscraper.tasks.scrape_all_ufc_fighters",
         "schedule": crontab("37"),
     },
-    # "scraping-ufc-fighters-photo": {
-    #     "task": "ufcscraper.tasks.scrape_all_ufc_fighters_photo_and_update",
-    #     "schedule": crontab("03"),
-    # },
 }
