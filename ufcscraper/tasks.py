@@ -159,7 +159,7 @@ def scrape_all_ufc_fighters():
 
 # scraping function for events
 @shared_task
-def scrape_all_ufc_events():
+def scrape_all_ufc_events(last: int = 10):
     event_list = []
     url = "http://ufcstats.com/statistics/events/completed?page=all"
     page = requests.get(url)
@@ -170,6 +170,7 @@ def scrape_all_ufc_events():
     rows = rows_body.find_all("tr")  # type: ignore
     # pop the first row because it is an empty line for some reason
     rows.pop(0)
+    i = 0
     for row in rows:
         cells = row.find_all("td")
         if len(cells) > 0:
@@ -191,6 +192,9 @@ def scrape_all_ufc_events():
                 "completed": True if not upcoming else False,
             }
             event_list.append(event)
+            i += 1
+            if i == last:
+                break
     # sort by date to maintain a consistent order of event ids between the initial scraping and the following ones.
     event_list = sorted(event_list, key=lambda k: k["date"])
     return save_events(event_list)

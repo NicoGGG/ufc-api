@@ -10,13 +10,13 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
 # scheduled task execution
-app.conf.beat_schedule = {
-    "scraping-ufc-events": {
-        "task": "ufcscraper.tasks.scrape_all_ufc_events",
-        "schedule": crontab("21"),
-    },
-    "scraping-ufc-fighters": {
-        "task": "ufcscraper.tasks.scrape_all_ufc_fighters",
-        "schedule": crontab("37"),
-    },
-}
+# app.conf.beat_schedule = {
+#     "scraping-ufc-events": {
+#         "task": "ufcscraper.tasks.scrape_all_ufc_events",
+#         "schedule": crontab("21"),
+#     },
+#     "scraping-ufc-fighters": {
+#         "task": "ufcscraper.tasks.scrape_all_ufc_fighters",
+#         "schedule": crontab("37"),
+#     },
+# }
